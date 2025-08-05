@@ -18,10 +18,11 @@ stages:
       displayName: 'Deploy to AKS'
       inputs:
         connectionType: 'Azure Resource Manager'
-        azureSubscription: 'AzureServiceConnection'
+        azureSubscription: 'Azure-RG-Connection'
         azureResourceGroup: 'rg-acr'
         kubernetesCluster: 'myakscluster99110011'
         namespace: '$(kubernetesNamespace)'
         command: apply
         useConfigurationFile: true
         configuration: 'flask-deployment.yaml'
+
