@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  kubernetesNamespace: 'default'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: DeployFlaskApp
+    steps:
+    - task: Kubernetes@1
+      displayName: 'Deploy to AKS'
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscription: 'AzureServiceConnection'
+        azureResourceGroup: 'rg-acr'
+        kubernetesCluster: 'myakscluster99110011'
+        namespace: '$(kubernetesNamespace)'
+        command: apply
+        useConfigurationFile: true
+        configuration: 'flask-deployment.yaml'
